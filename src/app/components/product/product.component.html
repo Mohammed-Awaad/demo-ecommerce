@@ -1,0 +1,40 @@
+<div class="row mt-4">
+    <div class="col-3" *ngFor="let prod of productList; trackBy: trackById">
+      <div class="card d-flex align-items-center mb-3 shadow text-center py-4 rounded-4" style="min-height: 30rem" LightBox="lightgreen" hoverBorderColor="red">
+        <div style="min-height: 15rem">
+          <img [src]="prod.img" class="card-img-top img-fluid" style="width: max(12rem); max-height: 14rem" alt="..." (click)="openProductDetails(prod.id)" />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" (click)="openProductDetails(prod.id)">{{ prod.name }}</h5>
+          <p class="card-text text-danger fw-bold fs-5">
+            {{ prod.price | currency }}
+          </p>
+          <p class="card-text text-danger fw-bold">
+            {{ prod.price | USDToEGP: 24 | currency: "EGP" }}
+          </p>
+          <!-- <p
+              class="card-text text-info fw-semibold fs-6"
+              *ngIf="prod.quantity != 0; else OOS"
+            >
+              In stock: {{ prod.quantity }}
+            </p>
+            <ng-template #OOS>
+              <p class="card-text text-warning fw-semibold fs-6">Out of stock</p>
+            </ng-template> -->
+          <ng-container [ngSwitch]="prod.quantity">
+            <p class="card-text text-danger fw-semibold fs-6" *ngSwitchCase="0">Out of stock</p>
+            <p class="card-text text-warning fw-semibold fs-6" *ngSwitchCase="1">Last item</p>
+            <p class="card-text text-warning fw-semibold fs-6" *ngSwitchCase="2">Last two items</p>
+            <p class="card-text text-info fw-semibold fs-6" *ngSwitchDefault>In stock: {{ prod.quantity }}</p>
+          </ng-container>
+        </div>
+        <div>
+          <input type="number" class="form-control mb-3" id="count" name="count" #count min="0" [max]="prod.quantity" style="width: max(7rem)" />
+          <button class="btn btn-warning" (click)="buy(prod.price, +count.value)" [disabled]="prod.quantity == 0">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- <hr /> -->
+    <!-- <h2>{{ date | date: "fullDate" }}</h2> -->
+  </div>
