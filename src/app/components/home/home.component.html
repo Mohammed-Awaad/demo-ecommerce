@@ -1,0 +1,14 @@
+<h1>
+  {{ storeInfo.name | uppercase }}
+</h1>
+
+<button class="btn btn-danger mb-2" (click)="toggleImg()">Toggle image</button>
+
+<img [src]="storeInfo.imgURL" class="img-fluid rounded d-block" alt="" *ngIf="showHideImg" />
+
+<h4 class="mt-3">Our branches:</h4>
+<ul>
+  <li class="fw-semibold" *ngFor="let branch of storeInfo.branches">
+    {{ branch }}
+  </li>
+</ul>
