@@ -1,0 +1,22 @@
+<div class="container-fluid mt-2">
+    <label for="Category" class="form-label fs-4 fw-bold">Categories</label>
+    <select class="form-select" name="Category" [(ngModel)]="selectedCategoryId">
+      <option selected value="0">All products</option>
+      <option [value]="cat.id" *ngFor="let cat of categoryList">
+        {{ cat.name }}
+      </option>
+    </select>
+    <app-product
+      #productComponent
+      [selectedCategoryId]="selectedCategoryId"
+      (totalPriceChanged)="onTotalPriceChanged($event)"
+    ></app-product>
+  
+    <hr />
+    <h2 class="text-success">TOTAL PRICE: {{ orderTotalPrice }}</h2>
+  </div>
+  
+  <!-- <div class="mb-3">
+    <label for="name" class="form-label fw-semibold">Enter your name:</label>
+    <input #clientName type="text" class="form-control" id="name" name="name" />
+  </div> -->
